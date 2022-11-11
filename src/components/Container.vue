@@ -1,34 +1,40 @@
 <template>
   <div class="container">
-    <input type="text" v-model="msg" />
-    <button @click="Create">Create</button>
-    <TodoList :TodoLists="data" :Delete="Delete" />
+    <Create :create="Create" />
+    <TodoList :toDoes="data" :deleteItem="Delete" />
   </div>
 </template>
 
 <script>
 import TodoList from './ToDo.vue';
+import Create from './Create.vue';
 import { ref } from 'vue';
 export default {
   components: {
     TodoList,
+    Create,
   },
   setup() {
     let data = ref([
-      { name: 'eating' },
-      { name: 'drinking' },
-      { name: 'sleeping' },
+      { name: 'Eating' },
+      { name: 'Drinking' },
+      { name: 'Sleeping' },
     ]);
-    function Create() {
-      data.value.push({ name: this.msg });
+    function updateDone(indx, state) {
+      data.value[idx].done = state;
+    }
+    function Create(item) {
+      data.value.push({ name: item });
     }
     function Delete(idx) {
       data.value.splice(idx, 1);
     }
+
     return {
       data,
       Create,
       Delete,
+      updateDone,
     };
   },
 };
@@ -50,6 +56,6 @@ input {
 button {
   border-radius: 5px;
   font-size: 20px;
-  background-color: green;
+  background-color: aquamarine;
 }
 </style>
